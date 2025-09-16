@@ -20,7 +20,17 @@ MAIL_FOLDER = os.getenv("MAIL_FOLDER", "INBOX")
 
 
 # Excel settings
-EXCEL_PATH = os.getenv("EXCEL_PATH", "data/mandatory_training.xlsx")
+year1_PATH = "./data/year1.xlsx"
+year2_PATH = "./data/year2.xlsx"
+year3_PATH = "./data/year3.xlsx"
+
+
+year_MAPPING = {
+    "1": year1_PATH,
+    "2": year2_PATH,
+    "3": year3_PATH
+}
+
 
 # Dry run toggle
 DRY_RUN = os.getenv("DRY_RUN", "True").lower() in ("1", "true", "yes")
