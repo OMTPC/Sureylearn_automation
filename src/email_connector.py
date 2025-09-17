@@ -1,48 +1,63 @@
+import win32com.client
+
+# def fetch_surreylearn_emails(limit=50):
+#     """
+#     Fetch SurreyLearn assignment emails from inbox.
+#     """
+#     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
+#     inbox = outlook.GetDefaultFolder(6)
+#     messages = inbox.Items
+#     messages.Sort("[ReceivedTime]", True)
+
+#     emails = []
+#     count = 0
+
+#     for msg in messages:
+#         if msg.Class != 43:  # only MailItem
+#             continue
+
+#         count += 1
+#         if count > limit:
+#             break
+
+#         sender = getattr(msg, "SenderName", "").lower()
+#         subject = getattr(msg, "Subject", "").lower()
+
+#         if "surreylearn notifications" in sender and "assignment submission" in subject:
+#             emails.append(msg)
+
+#     return emails
 
 
+# def fetch_surreylearn_emails(limit=10):
+#     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
+#     inbox = outlook.GetDefaultFolder(6)
+#     messages = inbox.Items
 
-import win32com.client 
+#     emails = []
+
+#     for msg in messages:
+#         # TEMP: fetch all messages, don’t filter sender yet
+#         emails.append(msg)
+#         if len(emails) >= limit:
+#             break
+
+#     return emails
 
 
-def fetch_surreylearn_emails():
-    """
-    Fetch unread emails from SurreyLearn and return a list of dictionaries:
-    [{'student_name': ..., 'assignment_name': ..., 'course_offering': ...}, ...]
-    """
+# import win32com.client
+
+def fetch_surreylearn_emails(limit=10):
     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
-    inbox = outlook.GetDefaultFolder(6)  # 6 refers to the inbox
+    inbox = outlook.GetDefaultFolder(6)
     messages = inbox.Items
-    messages = messages.Restrict("[Unread] = true")
-
 
     emails = []
 
-
     for msg in messages:
-        if msg.SenderEmailAddress.lower() == "surreylearnhelp@surrey.ac.uk":
-            body = msg.body.splitlines()
-
-
-            # parse the email body to extract relevant information
-            try:
-                student_name = [l for l in body if l.startswith("User:")][0].split(":")[1].strip()
-                assignment_name = [l for l in body if l.startswith("Assignment:")][0].split(":")[1].strip()     
-                course_offering = [l for l in body if l.startswith("Course Offering:")][0].split(":")[1].strip()
-
-
-                emails.append({
-                    "student_name": student_name,
-                    "assignment_name": assignment_name,
-                    "course_offering": course_offering,
-                    "msg": msg
-                })
-            
-
-            except IndexError:
-                continue
-    
+        if "SurreyLearn Notifications" in msg.SenderName and msg.Subject.startswith("Assignment Submission:"):
+            emails.append(msg)
+            if len(emails) >= limit:
+                break
 
     return emails
-
-
-            

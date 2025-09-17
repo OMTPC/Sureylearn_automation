@@ -7,6 +7,7 @@ import logging
 import re
 
 from src.excel_mapper import get_excel_path
+from collections import defaultdict
 
 logger = logging.getLogger(__name__)
 
@@ -84,6 +85,9 @@ def update_excel_with_submission(parsed_email: dict):
     logger.info(f"Updated Excel file: {excel_path} for student: {student_name}, assignment: {assignment}")
 
     return True
+
+    
+    
 
 
 
