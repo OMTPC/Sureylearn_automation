@@ -21,7 +21,7 @@ for email in emails:
     if year is None:
         continue
 
-    mark_treining_completed(
+    mark_training_completed(
         student_name=email["student_name"], 
         assignment_name=email["assignment_name"],
         excel_path=year
