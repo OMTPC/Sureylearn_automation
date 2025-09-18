@@ -53,9 +53,11 @@ def fetch_surreylearn_emails(limit=10):
     messages = inbox.Items
 
     emails = []
+    messages = inbox.Items
+    messages.Sort("[ReceivedTime]", True)  # newest first
 
     for msg in messages:
-        if "SurreyLearn Notifications" in msg.SenderName and msg.Subject.startswith("Assignment Submission:"):
+        if msg.UnRead and "SurreyLearn Notifications" in msg.SenderName and msg.Subject.startswith("Assignment Submission:"):
             emails.append(msg)
             if len(emails) >= limit:
                 break
