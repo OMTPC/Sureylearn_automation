@@ -5,7 +5,7 @@ from src.email_connector import fetch_surreylearn_emails
 from src.parser import parse_surreylearn_email
 from src.excel_updater import update_excel_with_submission
 
-def fetch_and_preview_emails(limit=10):
+def fetch_and_preview_emails(limit=50):
     """Fetch unread SurreyLearn emails and print a preview."""
     emails = fetch_surreylearn_emails(limit=limit)
     print(f"Found {len(emails)} unread SurreyLearn emails.\n")
@@ -16,7 +16,7 @@ def fetch_and_preview_emails(limit=10):
 
     return emails
 
-def fetch_and_parse_emails(limit=10):
+def fetch_and_parse_emails(limit=50):
     """Fetch emails and parse them into dictionaries."""
     emails = fetch_surreylearn_emails(limit=limit)
     print(f"Found {len(emails)} unread SurreyLearn emails.\n")
@@ -49,5 +49,5 @@ def process_parsed_emails(parsed_emails):
 
 
 if __name__ == "__main__":
-    parsed_emails = fetch_and_parse_emails(limit=10)
+    parsed_emails = fetch_and_parse_emails(limit=50)
     process_parsed_emails(parsed_emails)

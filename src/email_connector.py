@@ -47,7 +47,7 @@ import win32com.client
 
 # import win32com.client
 
-def fetch_surreylearn_emails(limit=10):
+def fetch_surreylearn_emails(limit=50):
     outlook = win32com.client.Dispatch("Outlook.Application").GetNamespace("MAPI")
     inbox = outlook.GetDefaultFolder(6)
     messages = inbox.Items
